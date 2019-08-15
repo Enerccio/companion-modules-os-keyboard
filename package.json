@@ -1,11 +1,27 @@
 {
-  "name": "linux-uinput",
+  "name": "os-keyboard",
   "version": "1.0.0",
-  "description": "",
+  "api_version": "1.0.0",
+  "manufacturer": "OS",
+  "product": "Keyboard emulator",
+  "shortname": "osKbEmulator",
+  "keywords": [
+    "OS",
+    "Keyboard emulator"
+  ],
+  "description": "Native keyboard emulator.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Peter Vaňušanik <admin@en-circle.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ref": "^1.3.5",
+    "ref-array": "^1.2.0",
+    "ref-struct": "^1.1.0"
+  },
+  "optionalDependencies": {
+    "ioctl": "^2.0.2"
+  }
 }
