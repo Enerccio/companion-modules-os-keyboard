@@ -9,7 +9,7 @@ function mkKeyboardInstance() {
 	var type = os.type();
 
 	if (type == 'Linux') {
-		var kb = new LinuxUinputKeyboard();
+		var kb = new LinuxUinputKeyboard(debug, log);
 		if (kb.initialized) {
 			return kb;
 		}
@@ -74,21 +74,15 @@ instance.prototype.actions = function (system) {
   var self = this;
 
   var actions = {
-		'Command': {
-			label: 'Execute command with arguments',
+		'KeyboardCombo': {
+			label: 'Execute keyboard keys combo',
 			options: [
 				{
 					type: 'textinput',
-					label: 'Command',
-					id: 'command',
+					label: 'Keys',
+					id: 'keys',
 					default: ''
-				},
-        {
-					type: 'textinput',
-					label: 'Arguments',
-					id: 'arguments',
-					default: '',
-				},
+				}
 			]
 		}
   };
@@ -97,22 +91,14 @@ instance.prototype.actions = function (system) {
 };
 
 instance.prototype.action = function (action) {
+	var self = this;
 
-  if (action.action == "Command") {
-    var command = action.options.command;
-    var arguments = action.options.arguments;
-
-    if (arguments !== "") {
-      command += " " + arguments;
-    }
-
-    debug("exec", command);
-    process.exec(command, function(error, stdout, stderr) {
-      if (error) {
-        debug("exec", error);
-      }
-    });
-  }
+	if (self.keyboard !== null) {
+		if (action.action == "KeyboardCombo") {
+			var keyStrings = action.options.keys;
+			self.keyboard.send(keyStrings);
+		}
+	}
 };
 
 instance_skel.extendedBy(instance);

@@ -1,3 +1,6 @@
+var debug;
+var log;
+
 var KEY_2_KEY_ID = {
   '0': 'KEY_0',
   '1': 'KEY_1',
@@ -116,8 +119,16 @@ var KEY_2_KEY_ID = {
   'Z': 'KEY_Z'
 };
 
-function Keyboard() {
+function Keyboard(debug_log, log_log) {
 	var self = this;
+
+  debug = debug_log;
+  log = log_log;
+
+  self.KEY_IDS = [];
+  for (var key in KEY_2_KEY_ID) {
+    self.KEY_IDS.push(KEY_2_KEY_ID[key]);
+  }
 
 	self.initialized = false;
 }
@@ -136,12 +147,16 @@ Keyboard.prototype.send = function (key_sequence) {
 Keyboard.prototype.translate = function (key_sequence) {
   var self = this;
 
+  debug("orig", key_sequence);
+
   var keys = key_sequence.split(" ");
   var key_ids = [];
 
   for(var i = 0; i < keys.length; i++) {
     key_ids.push(KEY_2_KEY_ID[keys[i]]);
   }
+
+  debug("ids", key_ids);
 
   return key_ids;
 };
